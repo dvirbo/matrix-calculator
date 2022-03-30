@@ -12,10 +12,12 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <vector>
 using namespace std;
+using namespace zich;
+
 
 #include "Matrix.hpp"
-using namespace zich;
 
 int main() {
   
