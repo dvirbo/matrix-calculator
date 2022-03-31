@@ -10,21 +10,22 @@ namespace zich
         int _column;
 
     public:
+        Matrix();
         Matrix(std::vector<double> vec, int row, int column);
 
         //-----------------------------
         // Arithmetic Operators
         //-----------------------------
 
-        Matrix operator-() const;
-        Matrix operator-(const Matrix &num);
-        Matrix operator-=(const Matrix &num);
+        Matrix operator-();
+        Matrix operator-(const Matrix &mat);
+        Matrix operator-=(const Matrix &mat);
 
         Matrix operator+() const;
-        Matrix operator+(const Matrix &num);
-        Matrix operator+=(const Matrix &num);
+        Matrix operator+(const Matrix &mat);
+        Matrix operator+=(const Matrix &mat);
 
-        Matrix operator*=(double d) const;
+        Matrix operator*=(double d);
 
         //-----------------------------
         // Comparison Operators
@@ -43,24 +44,26 @@ namespace zich
         //-----------------------------
         // Increment Decrement Operators
         //-----------------------------
+////////////////////////////////////////  zich::Matrix zich::Matrix::operator*(zich::Matrix &mat)
 
-        Matrix &operator--();
-        Matrix operator--(int dummy);
+       // Matrix &operator--();
+        Matrix operator--(int);
 
-        Matrix &operator++();
-        Matrix operator++(int dummy);
+      //  Matrix &operator++();
+        Matrix operator++(int);
 
         //-----------------------------
         // Friend Operators
         //-----------------------------
 
-        friend Matrix operator*(double d, const Matrix &num);
+        friend Matrix operator*(double d, Matrix &mat);
+         Matrix operator*(Matrix &mat);
 
         //-----------------------------
         // I/O Operators
         //-----------------------------
-        friend std::ostream &operator<<(std::ostream &out, Matrix num);
-        friend std::istream &operator>>(std::istream &in, Matrix &num);
+        friend std::ostream &operator<<(std::ostream &out, Matrix mat);
+        friend std::istream &operator>>(std::istream &in, Matrix &mat);
     };
 
 }

@@ -1,3 +1,4 @@
+#include <vector>
 /**
  * Demo file for the exercise on numbers with units
  *
@@ -7,17 +8,15 @@
  * Edited by Tal Zichlinsky
  * @since 2022-02
  */
-
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-#include <vector>
 using namespace std;
-using namespace zich;
-
 
 #include "Matrix.hpp"
+using namespace zich;
 
 int main() {
   
