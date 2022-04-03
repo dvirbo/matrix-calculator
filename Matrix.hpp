@@ -6,11 +6,11 @@ namespace zich
 {
     class Matrix
     {
+         std::vector<double> _vec;
         int _row;
         int _column;
 
     public:
-        Matrix();
         Matrix(std::vector<double> vec, int row, int column);
 
         //-----------------------------
@@ -44,20 +44,18 @@ namespace zich
         //-----------------------------
         // Increment Decrement Operators
         //-----------------------------
-////////////////////////////////////////  zich::Matrix zich::Matrix::operator*(zich::Matrix &mat)
 
-       // Matrix &operator--();
-        Matrix operator--(int);
+        // Matrix &operator--();
+        Matrix operator--(int num);
 
-      //  Matrix &operator++();
-        Matrix operator++(int);
+        //  Matrix &operator++();
+        Matrix operator++(int num);
 
         //-----------------------------
         // Friend Operators
         //-----------------------------
-
         friend Matrix operator*(double d, Matrix &mat);
-         Matrix operator*(Matrix &mat);
+        Matrix operator*(Matrix &mat);
 
         //-----------------------------
         // I/O Operators
