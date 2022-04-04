@@ -6,7 +6,7 @@ namespace zich
 {
     class Matrix
     {
-         std::vector<double> _vec;
+        std::vector<double> _vec;
         int _row;
         int _column;
 
@@ -18,12 +18,12 @@ namespace zich
         //-----------------------------
 
         Matrix operator-();
-        Matrix operator-(const Matrix &mat);
-        Matrix operator-=(const Matrix &mat);
+        Matrix operator-(const Matrix &other);
+        Matrix operator-=(const Matrix &other);
 
         Matrix operator+() const;
-        Matrix operator+(const Matrix &mat);
-        Matrix operator+=(const Matrix &mat);
+        Matrix operator+(const Matrix &other);
+        Matrix operator+=(const Matrix &other);
 
         Matrix operator*=(double d);
 
@@ -54,14 +54,14 @@ namespace zich
         //-----------------------------
         // Friend Operators
         //-----------------------------
-        friend Matrix operator*(double d, Matrix &mat);
-        Matrix operator*(Matrix &mat);
+        friend Matrix operator*(double d, Matrix &other);
+        Matrix operator*(Matrix &other);
 
         //-----------------------------
         // I/O Operators
         //-----------------------------
-        friend std::ostream &operator<<(std::ostream &out, Matrix mat);
-        friend std::istream &operator>>(std::istream &in, Matrix &mat);
+        friend std::ostream &operator<<(std::ostream &out, Matrix other);
+        friend std::istream &operator>>(std::istream &in, Matrix &other);
     };
 
 }

@@ -1,4 +1,3 @@
-#include <vector>
 /**
  * Demo file for the exercise on numbers with units
  *
@@ -8,11 +7,12 @@
  * Edited by Tal Zichlinsky
  * @since 2022-02
  */
-#include <vector>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <vector>
 using namespace std;
 
 #include "Matrix.hpp"
@@ -33,16 +33,13 @@ int main()
   /* prints [-1 0 0]
             [0 -1 0]
             [0 0 -1]*/
-  cout << (3 * a) << endl; // add a*3
-  /* prints [-3 0 0]
-            [0 -3 0]
-            [0 0 -3]*/
+  cout << (3 * a) << endl;
+  /* prints [3 0 0]
+            [0 3 0]
+            [0 0 3]*/
 
   Matrix b{arr, 3, 3};
-
   a *= -3;
-
-  a--;
   cout << (a + b) << endl; // prints the 0 matrix
   cout << (b - a) << endl;
   /* prints [6 0 0]
