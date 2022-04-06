@@ -24,8 +24,6 @@ namespace zich
         Matrix operator+(const Matrix &other);
         Matrix operator+=(const Matrix &other);
 
-        Matrix operator*=(double d);
-
         //##############################
         // Inc Dec Operators
         //##############################
@@ -53,6 +51,8 @@ namespace zich
         //##############################
         friend Matrix operator*(double d, Matrix &mat);
         Matrix operator*(Matrix &other);
+        Matrix operator*=(double d);
+        Matrix operator*(double d);
 
         //##############################
         // I/O Operators

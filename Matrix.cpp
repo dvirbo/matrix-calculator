@@ -225,6 +225,19 @@ Matrix Matrix::operator*=(double d)
     return *this;
 }
 
+Matrix Matrix::operator*(double d)
+{
+    Matrix temp{this->_vec, this->_row, this->_column};
+    unsigned t = 0;
+    for (unsigned i = 0; i < temp._vec.size(); i++)
+    {
+        t = temp._vec.at(i);
+        t *= d;
+        temp._vec.at(i) = t;
+    }
+    return temp;
+}
+
 //-----------------------------
 // I/O Operators
 //-----------------------------
@@ -250,16 +263,16 @@ ostream &zich::operator<<(std::ostream &out, Matrix mat)
     return out;
 }
 
-//https://docs.microsoft.com/en-us/cpp/standard-library/overloading-the-input-operator-for-your-own-classes?view=msvc-170
+// https://docs.microsoft.com/en-us/cpp/standard-library/overloading-the-input-operator-for-your-own-classes?view=msvc-170
 istream &zich::operator>>(std::istream &in, Matrix &mat)
 {
 
     std::vector<double> vec;
-    int r = 0,c = 0;
+    int r = 0, c = 0;
 
-   // in >> mat._vec >> mat._row >>mat._column;
-   // in >> vec >> r >> c;
-  // in >> mat._vec >>mat._row >>mat._column;
+    // in >> mat._vec >> mat._row >>mat._column;
+    // in >> vec >> r >> c;
+    // in >> mat._vec >>mat._row >>mat._column;
 
     return in;
 }
