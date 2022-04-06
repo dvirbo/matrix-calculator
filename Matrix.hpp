@@ -5,17 +5,16 @@ namespace zich
 {
     class Matrix
     {
-    public:
-        std::vector<double> _vec;
         int _row;
         int _column;
 
+    public:
+        std::vector<double> _vec;
         Matrix(std::vector<double> vec, int row, int column);
 
         //#####################
         // Arithmetic Operators
         //#####################
-
         Matrix operator-();
         Matrix operator-(const Matrix &other);
         Matrix operator-=(const Matrix &other);

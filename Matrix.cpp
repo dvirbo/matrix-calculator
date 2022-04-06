@@ -19,6 +19,7 @@ Matrix::Matrix(vector<double> vec, int row, int column)
 {
 }
 
+
 //-----------------------------
 // Arithmetic Operators:
 //-----------------------------
