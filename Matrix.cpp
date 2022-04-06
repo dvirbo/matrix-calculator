@@ -249,13 +249,17 @@ ostream &zich::operator<<(std::ostream &out, Matrix mat)
 
     return out;
 }
+
+//https://docs.microsoft.com/en-us/cpp/standard-library/overloading-the-input-operator-for-your-own-classes?view=msvc-170
 istream &zich::operator>>(std::istream &in, Matrix &mat)
 {
 
-    std::vector<double> arr;
-    int r,c;
+    std::vector<double> vec;
+    int r = 0,c = 0;
 
-   // in >> arr >> r >>c;
+   // in >> mat._vec >> mat._row >>mat._column;
+   // in >> vec >> r >> c;
+  // in >> mat._vec >>mat._row >>mat._column;
 
     return in;
 }

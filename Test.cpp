@@ -66,3 +66,12 @@ TEST_CASE("Increment Decrement Operators")
     CHECK((aa == ab++) == true); // need to fix to CHECK
     CHECK((aa-- == ab) == true); // need to fix to CHECK
 }
+
+TEST_CASE("mult"){
+    vector<double> vecm1 = {2, 1, 1, 2};
+    vector<double> vecm2 = {4, 2, 2, 4};
+    Matrix aa{vecm1, 2, 2};
+    CHECK_NOTHROW(aa*=2);
+    CHECK(aa._vec == vecm2);
+
+}
