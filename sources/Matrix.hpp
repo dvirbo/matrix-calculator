@@ -1,3 +1,4 @@
+
 // @AUTHOR: dvir borochov
 // Header file for class Matrix
 
@@ -22,6 +23,7 @@ namespace zich
         Matrix operator+() const;
         Matrix operator+(const Matrix &other);
         Matrix operator+=(const Matrix &other);
+        Matrix operator-=(const Matrix &other);
 
         //##############################
         // Inc Dec Operators
@@ -30,6 +32,10 @@ namespace zich
         Matrix operator--(int num);
 
         Matrix operator++(int num);
+
+        Matrix Matrix::operator--();
+
+        Matrix Matrix::operator++();
 
         //#####################
         // Comparison Operators
@@ -58,6 +64,7 @@ namespace zich
         //##############################
         friend std::ostream &operator<<(std::ostream &out, Matrix mat);
         friend std::istream &operator>>(std::istream &in, Matrix &mat);
+        friend std::vector<double> &getvec();
     };
 
 }

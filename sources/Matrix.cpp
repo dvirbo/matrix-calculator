@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <numeric>
 #include <tgmath.h>
+#include <algorithm>
 #include "Matrix.hpp"
 
 using namespace std;
@@ -18,7 +19,6 @@ Matrix::Matrix(vector<double> vec, int row, int column)
 
 {
 }
-
 
 //-----------------------------
 // Arithmetic Operators:
@@ -95,15 +95,21 @@ Matrix Matrix::operator+=(const Matrix &other)
     {
         throw "can't make Arithmetic Operators between Different matrices";
     }
-    for (unsigned i = 0; i < this->_vec.size(); i++)
+    return (*this = *this + other);
+}
+Matrix Matrix::operator-=(const Matrix &other)
+{
+    if (this->_row != other._row || this->_column != other._column)
     {
-        this->_vec.at(i) = this->_vec.at(i) + other._vec.at(i);
+        throw "can't make Arithmetic Operators between Different matrices";
     }
-
-    return *this;
+    return (*this = *this - other);
 }
 
-Matrix Matrix::operator--(int num)
+// ---------------------------------------------------------------
+// inc and dec operators
+// ---------------------------------------------------------------
+Matrix Matrix::operator++() // pre (++x)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -114,7 +120,29 @@ Matrix Matrix::operator--(int num)
     return temp;
 }
 
-Matrix Matrix::operator++(int num)
+Matrix Matrix::operator--() // pre (--x)
+{
+    Matrix temp{this->_vec, this->_row, this->_column};
+    for (unsigned i = 0; i < temp._vec.size(); i++)
+    {
+        temp._vec.at(i) -= 1;
+    }
+
+    return temp;
+}
+
+Matrix Matrix::operator--(int num) // post (x--)
+{
+    Matrix temp{this->_vec, this->_row, this->_column};
+    for (unsigned i = 0; i < temp._vec.size(); i++)
+    {
+        temp._vec.at(i) -= 1;
+    }
+
+    return temp;
+}
+
+Matrix Matrix::operator++(int num) // post (x++)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -124,17 +152,17 @@ Matrix Matrix::operator++(int num)
 
     return temp;
 }
-
 //-----------------------------
 // Comparison Operators:
 //-----------------------------
 
 bool Matrix::operator!=(const Matrix &other) const
 {
-    int sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0);
-    int sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0);
+    // int sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0);
+    // int sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0);
 
-    return (sum1 != sum2 ? true : false);
+    // return (sum1 != sum2 ? true : false);
+    return !(*this == other);
 }
 
 bool Matrix::operator==(const Matrix &other) const
@@ -178,7 +206,7 @@ bool Matrix::operator>(const Matrix &other) const
 //-----------------------------
 
 // mult mat with some num.. not change the orginal mat
-zich::Matrix zich::operator*(double d, zich::Matrix &mat)
+zich::Matrix zich::operator*(double d, Matrix &mat)
 {
     Matrix temp{mat._vec, mat._row, mat._column};
     unsigned t = 0;
@@ -264,16 +292,53 @@ ostream &zich::operator<<(std::ostream &out, Matrix mat)
     return out;
 }
 
-// https://docs.microsoft.com/en-us/cpp/standard-library/overloading-the-input-operator-for-your-own-classes?view=msvc-170
 istream &zich::operator>>(std::istream &in, Matrix &mat)
 {
+    string s;
+    string token;
+    string delimiter = ", ";
+    string ans;
+    size_t rowLen = 0; // the length of the row
+    size_t pos = 0;
+    double data = 0;
+    std::vector<double> finvec;
 
-    std::vector<double> vec;
-    int r = 0, c = 0;
+    getline(in, s); // scan the str from the user:
 
-    // in >> mat._vec >> mat._row >>mat._column;
-    // in >> vec >> r >> c;
-    // in >> mat._vec >>mat._row >>mat._column;
+    while ((pos = s.find(delimiter)) != string::npos)
+    {
+        token = s.substr(0, pos);
+        if (rowLen == 0)
+        {
+            rowLen = token.length();
+        }
+        else
+        {
+            if (token.length() != rowLen)
+            {
+                throw invalid_argument("the rows must be the same length\n");
+            }
+        }
+        ans += token;
+        std::cout << token << endl;
+        s.erase(0, pos + delimiter.length());
+    }
+    if (s.length() != rowLen) // check if the final part is valid
+    {
+        throw invalid_argument("the rows must be the same length\n");
+    }
+    ans += s;
+    ans.erase(std::remove(ans.begin(), ans.end(), '['), ans.end()); // erase '[' from the str
+    std::replace(ans.begin(), ans.end(), ']', ' '); // replace all ']' to ' '
+    std::stringstream iss(ans); //parse str to vector of double:
 
+    while (iss >> data)
+    {
+        finvec.push_back(data);
+    }
+    // allocate the final data to the matrix:
+    mat._row = rowLen;
+    mat._column = finvec.size() / rowLen;
+    mat._vec = finvec;
     return in;
 }
