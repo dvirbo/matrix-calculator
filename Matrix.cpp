@@ -25,7 +25,7 @@ Matrix::Matrix(vector<double> vec, int row, int column)
 //-----------------------------
 
 // make the change on other matrix
-Matrix Matrix::operator-()
+Matrix Matrix::operator-() const
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     int t = 0;
@@ -53,26 +53,23 @@ Matrix Matrix::operator-(const Matrix &other)
     return temp;
 }
 // here we change the orginal mat
-Matrix Matrix::operator-=(const Matrix &other)
-{
-    if (this->_row != other._row || this->_column != other._column)
-    {
-        throw "can't make Arithmetic Operators between Different matrices";
-    }
-    for (unsigned i = 0; i < this->_vec.size(); i++)
-    {
-        this->_vec.at(i) = this->_vec.at(i) - other._vec.at(i);
-    }
+// Matrix Matrix::operator-=(const Matrix &other)
+// {
+//     if (this->_row != other._row || this->_column != other._column)
+//     {
+//         throw "can't make Arithmetic Operators between Different matrices";
+//     }
+//     for (unsigned i = 0; i < this->_vec.size(); i++)
+//     {
+//         this->_vec.at(i) = this->_vec.at(i) - other._vec.at(i);
+//     }
 
-    return *this;
-}
+//     return *this;
+// }
 
 Matrix Matrix::operator+() const
 {
-    // for (unsigned i = 0; i < this->_vec.size(); i++)  ???????
-    // {
-    //     this->_vec.at(i) * (-1);
-    // }
+
     return *this;
 }
 Matrix Matrix::operator+(const Matrix &other)
@@ -109,7 +106,7 @@ Matrix Matrix::operator-=(const Matrix &other)
 // ---------------------------------------------------------------
 // inc and dec operators
 // ---------------------------------------------------------------
-Matrix Matrix::operator++() // pre (++x)
+Matrix &Matrix::operator++() const // pre (++x)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -120,7 +117,7 @@ Matrix Matrix::operator++() // pre (++x)
     return temp;
 }
 
-Matrix Matrix::operator--() // pre (--x)
+Matrix &Matrix::operator--() const // pre (--x)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -131,7 +128,7 @@ Matrix Matrix::operator--() // pre (--x)
     return temp;
 }
 
-Matrix Matrix::operator--(int num) // post (x--)
+Matrix &Matrix::operator--(int num) const // post (x--)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -142,7 +139,7 @@ Matrix Matrix::operator--(int num) // post (x--)
     return temp;
 }
 
-Matrix Matrix::operator++(int num) // post (x++)
+Matrix &Matrix::operator++(int num) const // post (x++)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -167,38 +164,69 @@ bool Matrix::operator!=(const Matrix &other) const
 
 bool Matrix::operator==(const Matrix &other) const
 {
-    int sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0);
-    int sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0);
-    return (sum1 == sum2 ? true : false);
+    if (this->_row != other._row || this->_column != other._column)
+    {
+        return false;
+    }
+
+    for (size_t i = 0; i < this->_row; ++i)
+    {
+        for (size_t j = 0; j < this->_column; j++)
+        {
+            if (this->_vec.at(i) != other._vec.at(i))
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 bool Matrix::operator<=(const Matrix &other) const
 {
-    int sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0);
-    int sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0);
-
-    return (sum1 <= sum2 ? true : false);
+    bool flag = false;
+    size_t sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0.0);
+    size_t sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0.0);
+    if (sum1 <= sum2)
+    {
+        flag = true;
+    }
+    return flag;
 }
 bool Matrix::operator>=(const Matrix &other) const
 {
-    int sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0);
-    int sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0);
-
-    return (sum1 >= sum2 ? true : false);
+    bool flag = false;
+    size_t sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0.0);
+    size_t sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0.0);
+    if (sum1 >= sum2)
+    {
+        flag = true;
+    }
+    return flag;
 }
 
 bool Matrix::operator<(const Matrix &other) const
 {
-    int sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0);
-    int sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0);
-
-    return (sum1 < sum2 ? true : false);
+    bool flag = false;
+    size_t sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0.0);
+    size_t sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0.0);
+    if (sum1 < sum2)
+    {
+        flag = true;
+    }
+    return flag;
 }
 bool Matrix::operator>(const Matrix &other) const
 {
-    int sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0);
-    int sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0);
-    return (sum1 > sum2 ? true : false);
+    bool flag = false;
+    size_t sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0.0);
+    size_t sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0.0);
+    if (sum1 > sum2)
+    {
+        flag = true;
+    }
+    return flag;
 }
 
 //-----------------------------
@@ -209,7 +237,7 @@ bool Matrix::operator>(const Matrix &other) const
 zich::Matrix zich::operator*(double d, Matrix &mat)
 {
     Matrix temp{mat._vec, mat._row, mat._column};
-    unsigned t = 0;
+    double t = 0;
     for (unsigned i = 0; i < temp._vec.size(); i++)
     {
         t = temp._vec.at(i);
@@ -232,11 +260,15 @@ Matrix Matrix::operator*(Matrix &other)
     Matrix temp{tVec, this->_column, other._row};
 
     for (unsigned int i = 0; i < this->_row; ++i)
+    {
         for (unsigned int j = 0; j < other._column; ++j)
+        {
             for (unsigned int k = 0; k < this->_column; ++k)
             {
                 temp._vec.at(i + j) += this->_vec.at(i + k) * other._vec.at(k + j);
             }
+        }
+    }
 
     return temp;
 }
@@ -244,7 +276,7 @@ Matrix Matrix::operator*(Matrix &other)
 // mult mat with some num, change and return the orginal mat
 Matrix Matrix::operator*=(double d)
 {
-    int t = 0;
+    double t = 0;
     for (unsigned int i = 0; i < this->_vec.size(); i++)
     {
         t = this->_vec.at(i);
@@ -254,10 +286,10 @@ Matrix Matrix::operator*=(double d)
     return *this;
 }
 
-Matrix Matrix::operator*(double d)
+Matrix Matrix::operator*(double d) const
 {
     Matrix temp{this->_vec, this->_row, this->_column};
-    unsigned t = 0;
+    double t = 0;
     for (unsigned i = 0; i < temp._vec.size(); i++)
     {
         t = temp._vec.at(i);
@@ -283,7 +315,9 @@ ostream &zich::operator<<(std::ostream &out, Matrix mat)
             cout << " " << mat._vec.at(ii + jj);
             jj++;
             if (j == mat._column - 1)
+            {
                 cout << endl;
+            }
             jj = 0;
             ii++;
         }
@@ -298,7 +332,7 @@ istream &zich::operator>>(std::istream &in, Matrix &mat)
     string token;
     string delimiter = ", ";
     string ans;
-    size_t rowLen = 0; // the length of the row
+    size_t rowLen = SIZE_MAX; // the length of the row
     size_t pos = 0;
     double data = 0;
     std::vector<double> finvec;
@@ -308,7 +342,7 @@ istream &zich::operator>>(std::istream &in, Matrix &mat)
     while ((pos = s.find(delimiter)) != string::npos)
     {
         token = s.substr(0, pos);
-        if (rowLen == 0)
+        if (rowLen == SIZE_MAX)
         {
             rowLen = token.length();
         }
@@ -329,8 +363,8 @@ istream &zich::operator>>(std::istream &in, Matrix &mat)
     }
     ans += s;
     ans.erase(std::remove(ans.begin(), ans.end(), '['), ans.end()); // erase '[' from the str
-    std::replace(ans.begin(), ans.end(), ']', ' '); // replace all ']' to ' '
-    std::stringstream iss(ans); //parse str to vector of double:
+    std::replace(ans.begin(), ans.end(), ']', ' ');                 // replace all ']' to ' '
+    std::stringstream iss(ans);                                     // parse str to vector of double:
 
     while (iss >> data)
     {

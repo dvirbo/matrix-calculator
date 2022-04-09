@@ -46,7 +46,7 @@ TEST_CASE("Arithmetic Operators")
 
 TEST_CASE("Comparison Operators")
 {
-    CHECK((a != b) == true);
+    CHECK(a != b);
     vector<double> vecop1 = {1, 0, 0, 0, 1, 0, 0, 0, 1};
     vector<double> vecop2 = {1, 2, 0, 1, 1, 1};
     Matrix e{vecop2, 3, 3};
@@ -75,4 +75,12 @@ TEST_CASE("mult")
     CHECK_NOTHROW(aa *= 2);
     CHECK(aa._vec == vecm2);
     CHECK_NOTHROW(aa * 3);
+}
+TEST_CASE("eql")
+{
+    vector<double> vecm1 = {20.9, 1, 1, 2};
+    vector<double> vecm2 = {20.8, 1, 1, 2};
+    Matrix aa{vecm1, 2, 2};
+    Matrix ab{vecm2, 2, 2};
+    CHECK(aa != ab);
 }

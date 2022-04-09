@@ -16,10 +16,8 @@ namespace zich
         //#####################
         // Arithmetic Operators
         //#####################
-        Matrix operator-();
+        Matrix operator-() const;
         Matrix operator-(const Matrix &other);
-        Matrix operator-=(const Matrix &other);
-
         Matrix operator+() const;
         Matrix operator+(const Matrix &other);
         Matrix operator+=(const Matrix &other);
@@ -29,13 +27,13 @@ namespace zich
         // Inc Dec Operators
         //##############################
 
-        Matrix operator--(int num);
+        Matrix &operator--(int num) const;
 
-        Matrix operator++(int num);
+        Matrix &operator++(int num) const;
 
-        Matrix Matrix::operator--();
+        Matrix &operator--() const;
 
-        Matrix Matrix::operator++();
+        Matrix &operator++ () const;
 
         //#####################
         // Comparison Operators
@@ -57,7 +55,7 @@ namespace zich
         friend Matrix operator*(double d, Matrix &mat);
         Matrix operator*(Matrix &other);
         Matrix operator*=(double d);
-        Matrix operator*(double d);
+        Matrix operator*(double d) const;
 
         //##############################
         // I/O Operators
