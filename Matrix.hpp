@@ -27,13 +27,13 @@ namespace zich
         // Inc Dec Operators
         //##############################
 
-        Matrix &operator--(int num) const;
+        Matrix operator--(int num) const;
 
-        Matrix &operator++(int num) const;
+        Matrix operator++(int num) const;
 
-        Matrix &operator--() const;
+        Matrix operator--() const;
 
-        Matrix &operator++ () const;
+        Matrix operator++ () const;
 
         //#####################
         // Comparison Operators

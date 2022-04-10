@@ -15,7 +15,7 @@ using namespace zich;
 
 // initializer lists of vec, row and column
 Matrix::Matrix(vector<double> vec, int row, int column)
-    : _vec(vec), _row(row), _column(column)
+    : _vec(std::move(vec)), _row(row), _column(column)
 
 {
 }
@@ -106,7 +106,7 @@ Matrix Matrix::operator-=(const Matrix &other)
 // ---------------------------------------------------------------
 // inc and dec operators
 // ---------------------------------------------------------------
-Matrix &Matrix::operator++() const // pre (++x)
+Matrix Matrix::operator++() const // pre (++x)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -117,7 +117,7 @@ Matrix &Matrix::operator++() const // pre (++x)
     return temp;
 }
 
-Matrix &Matrix::operator--() const // pre (--x)
+Matrix Matrix::operator--() const // pre (--x)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -128,7 +128,7 @@ Matrix &Matrix::operator--() const // pre (--x)
     return temp;
 }
 
-Matrix &Matrix::operator--(int num) const // post (x--)
+Matrix Matrix::operator--(int num) const // post (x--)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -139,7 +139,7 @@ Matrix &Matrix::operator--(int num) const // post (x--)
     return temp;
 }
 
-Matrix &Matrix::operator++(int num) const // post (x++)
+Matrix Matrix::operator++(int num) const // post (x++)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
     for (unsigned i = 0; i < temp._vec.size(); i++)
@@ -254,7 +254,7 @@ Matrix Matrix::operator*(Matrix &other)
     {
         throw "wrong mult";
     }
-    unsigned long size = (unsigned long)(this->_row * other._column);
+    unsigned int size = (unsigned int)(this->_row * other._column);
     vector<double> tVec(size, 0);
 
     Matrix temp{tVec, this->_column, other._row};
@@ -372,7 +372,7 @@ istream &zich::operator>>(std::istream &in, Matrix &mat)
     }
     // allocate the final data to the matrix:
     mat._row = rowLen;
-    mat._column = finvec.size() / rowLen;
+    mat._column = (int)(finvec.size() / rowLen);
     mat._vec = finvec;
     return in;
 }
