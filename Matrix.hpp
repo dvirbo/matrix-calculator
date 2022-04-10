@@ -33,7 +33,7 @@ namespace zich
 
         Matrix operator--() const;
 
-        Matrix operator++ () const;
+        Matrix operator++() const;
 
         //#####################
         // Comparison Operators
@@ -53,8 +53,9 @@ namespace zich
         // mult Operator
         //##############################
         friend Matrix operator*(double d, Matrix &mat);
-        Matrix operator*(Matrix &other);
+        Matrix operator*(const Matrix &other);
         Matrix operator*=(double d);
+        Matrix &operator*=(const Matrix &other);              // V
         Matrix operator*(double d) const;
 
         //##############################

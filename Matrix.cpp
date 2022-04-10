@@ -248,7 +248,7 @@ zich::Matrix zich::operator*(double d, Matrix &mat)
 }
 
 // mult 2 mat..return the new mat the mult of them
-Matrix Matrix::operator*(Matrix &other)
+Matrix Matrix::operator*(const Matrix &other)
 {
     if (this->_column != other._row)
     {
@@ -259,11 +259,11 @@ Matrix Matrix::operator*(Matrix &other)
 
     Matrix temp{tVec, this->_column, other._row};
 
-    for (unsigned int i = 0; i < this->_row; ++i)
+    for (unsigned int i = 0; i < this->_row; i++)
     {
-        for (unsigned int j = 0; j < other._column; ++j)
+        for (unsigned int j = 0; j < other._column; j++)
         {
-            for (unsigned int k = 0; k < this->_column; ++k)
+            for (unsigned int k = 0; k < this->_column; k++)
             {
                 temp._vec.at(i + j) += this->_vec.at(i + k) * other._vec.at(k + j);
             }
@@ -299,6 +299,12 @@ Matrix Matrix::operator*(double d) const
     return temp;
 }
 
+Matrix &Matrix::operator*=(const Matrix &other)
+{
+        *this = (*this * other);
+        return *this;
+}
+
 //-----------------------------
 // I/O Operators
 //-----------------------------
@@ -315,10 +321,10 @@ ostream &zich::operator<<(std::ostream &out, Matrix mat)
         {
             if (j == mat._column - 1) // case we at the end of the line:
             {
-            cout << mat._vec.at(ii + jj) << ']' << endl; 
-            jj = 0;
-            ii++;   
-            continue;   
+                cout << mat._vec.at(ii + jj) << ']' << endl;
+                jj = 0;
+                ii++;
+                continue;
             }
             cout << mat._vec.at(ii + jj) << " ";
             jj = 0;
