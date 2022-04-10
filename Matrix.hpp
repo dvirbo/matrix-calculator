@@ -62,7 +62,6 @@ namespace zich
         //##############################
         friend std::ostream &operator<<(std::ostream &out, Matrix mat);
         friend std::istream &operator>>(std::istream &in, Matrix &mat);
-        friend std::vector<double> &getvec();
     };
 
 }
