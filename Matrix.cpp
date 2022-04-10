@@ -310,14 +310,17 @@ ostream &zich::operator<<(std::ostream &out, Matrix mat)
 
     for (unsigned int i = 0; i < mat._row; ++i)
     {
+        cout << '[';
         for (unsigned int j = 0; j < mat._column; ++j)
         {
-            cout << " " << mat._vec.at(ii + jj);
-            jj++;
-            if (j == mat._column - 1)
+            if (j == mat._column - 1) // case we at the end of the line:
             {
-                cout << endl;
+            cout << mat._vec.at(ii + jj) << ']' << endl; 
+            jj = 0;
+            ii++;   
+            continue;   
             }
+            cout << mat._vec.at(ii + jj) << " ";
             jj = 0;
             ii++;
         }

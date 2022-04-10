@@ -23,4 +23,4 @@ tidy:
 
 
 clean:
-	rm -f *.o demo test
+	rm -f *.o demo test main
