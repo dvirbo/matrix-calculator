@@ -18,6 +18,19 @@ Matrix::Matrix(vector<double> vec, int row, int column)
     : _vec(std::move(vec)), _row(row), _column(column)
 
 {
+    if (this->_vec.empty())
+    {
+        throw invalid_argument("empty vactor");
+    }
+    if (this->_row <= 0 || this->_column <= 0)
+    {
+        throw invalid_argument("size of row/ colunm is negetive");
+    }
+    if (this->_row * this->_column != this->_row * this->_column)
+    {
+        //  cout << this->_row * this->_column << endl << this->_row * this->_column << endl;
+        throw invalid_argument("unvalid sizes");
+    }
 }
 
 //-----------------------------
@@ -89,56 +102,47 @@ Matrix Matrix::operator-=(const Matrix &other)
     return (*this = *this - other);
 }
 
-// ---------------------------------------------------------------
+// ----------------------
 // inc and dec operators
-// ---------------------------------------------------------------
+// ----------------------
 
-Matrix Matrix::operator++() const // pre (++x)
+Matrix &Matrix::operator++() // pre (++x)
 {
-    Matrix temp{this->_vec, this->_row, this->_column};
-    for (unsigned i = 0; i < temp._vec.size(); i++)
+    for (unsigned i = 0; i < this->_vec.size(); i++)
     {
-        temp._vec.at(i) -= 1;
+        this->_vec.at(i) += 1;
     }
 
-    return temp;
-}
+    return *this;
+} 
 
-Matrix Matrix::operator--() const // pre (--x)
+Matrix &Matrix::operator--() // pre (--x)
 {
-    Matrix temp{this->_vec, this->_row, this->_column};
-    for (unsigned i = 0; i < temp._vec.size(); i++)
+    for (unsigned i = 0; i < this->_vec.size(); i++)
     {
-        temp._vec.at(i) -= 1;
+        this->_vec.at(i) -= 1;
     }
+    return *this;
+} 
 
-    return temp;
-}
-
-Matrix Matrix::operator--(int num) const // post (x--)
+Matrix Matrix::operator--(int num) // post (x--)
 {
-    Matrix temp{this->_vec, this->_row, this->_column};
-    for (unsigned i = 0; i < temp._vec.size(); i++)
-    {
-        temp._vec.at(i) -= 1;
-    }
 
-    return temp;
+    Matrix res = *this;
+    --(*this);
+    return res;
 }
 
-Matrix Matrix::operator++(int num) const // post (x++)
+Matrix Matrix::operator++(int num) // post (x++)
 {
-    Matrix temp{this->_vec, this->_row, this->_column};
-    for (unsigned i = 0; i < temp._vec.size(); i++)
-    {
-        temp._vec.at(i) += 1;
-    }
-
-    return temp;
+        Matrix res = *this;
+    ++(*this);
+    return res;
 }
-//-----------------------------
-// Comparison Operators:
-//-----------------------------
+
+//---------------------
+// Comparison Operators
+//---------------------
 
 bool Matrix::operator!=(const Matrix &other) const
 {
@@ -213,9 +217,9 @@ bool Matrix::operator>(const Matrix &other) const
     return flag;
 }
 
-//-----------------------------
-// mult Operators:
-//-----------------------------
+//---------------
+// mult Operators
+//---------------
 
 // mult mat with some num.. not change the orginal mat
 zich::Matrix zich::operator*(double d, Matrix &mat)
@@ -230,7 +234,9 @@ zich::Matrix zich::operator*(double d, Matrix &mat)
     }
     return temp;
 }
+/*
 
+*/
 double Matrix::mult_helper(const Matrix &other, const int row, const int col)
 {
     double ans = 0;
@@ -296,9 +302,9 @@ Matrix &Matrix::operator*=(const Matrix &other)
     return *this;
 }
 
-//-----------------------------
+//--------------
 // I/O Operators
-//-----------------------------
+//--------------
 ostream &zich::operator<<(std::ostream &out, Matrix mat)
 {
     // for iner using:

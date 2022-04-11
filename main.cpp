@@ -3,7 +3,7 @@
 /*
  @AUTHOR: dvir borochov
  how to run:
-  clang++-9 main1.cpp -o main
+  clang++-9 main.cpp -o main
    */
 
 int main()
@@ -30,14 +30,15 @@ int main()
 
     cout << (b - a) << endl;
 
-    // cout << (a < b) << endl; // print 0
-
     vector<double> l1vec = {1, 2, 3, 1};
     vector<double> l2vec = {3, 2, 4, 3};
     Matrix d1{l1vec, 2, 2}; // constructor taking a vector and a matrix size
     Matrix d2{l2vec, 2, 2}; // constructor taking a vector and a matrix size
 
-    cout << (d1 * d2) << endl;
+   // cout << (d1 * d2) << endl;
+   // cout << (d2 * d1) << endl;
+   // cout << (d1 *= d2) << endl;
+   // cout << (d2 *= d1) << endl;
 
     cout << "End of main!" << endl;
     return 0;
