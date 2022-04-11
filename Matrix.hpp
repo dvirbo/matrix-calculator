@@ -56,7 +56,7 @@ namespace zich
         friend Matrix operator*(double d, Matrix &mat);
         Matrix operator*(const Matrix &other);
         Matrix operator*=(double d);
-        Matrix &operator*=(const Matrix &other);              // V
+        Matrix &operator*=(const Matrix &other);              
         Matrix operator*(double d) const;
 
 

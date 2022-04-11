@@ -85,3 +85,18 @@ TEST_CASE("eql")
     Matrix ab{vecm2, 2, 2};
     CHECK(aa != ab);
 }
+
+
+TEST_CASE("cin")
+{
+    vector<double> vecm1 = {20.9, 1, 1, 2};
+    vector<double> vecm2 = {20.8, 1, 1, 2};
+    Matrix aa{vecm1, 3, 3};
+    istringstream is7{"[1 1 1], [1 1 2], [1 1 1]\n"};
+    CHECK_NOTHROW(is7 >> aa);
+    //cout << aa << endl;
+}
+/*
+        friend std::ostream &operator<<(std::ostream &out, Matrix mat);
+        friend std::istream &operator>>(std::istream &in, Matrix &mat);
+*/

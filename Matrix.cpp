@@ -256,17 +256,15 @@ Matrix Matrix::operator*(const Matrix &other)
     unsigned int size = (unsigned int)(this->_row * other._column);
     vector<double> tVec(size, 0);
     Matrix temp{tVec, this->_column, other._row};
-        for (int i = 0; i < temp._row; i++)
+    for (int i = 0; i < temp._row; i++)
+    {
+        for (int j = 0; j < temp._column; j++)
         {
-            for (int j = 0; j < temp._column; j++)
-            {
-              temp._vec.at((unsigned int)(i * temp._column + j)) = mult_helper(other, i, j);
-
-            }
+            temp._vec.at((unsigned int)(i * temp._column + j)) = mult_helper(other, i, j);
         }
-        return temp;
     }
-
+    return temp;
+}
 
 // mult mat with some num, change and return the orginal mat
 Matrix Matrix::operator*=(double d)
@@ -346,7 +344,7 @@ istream &zich::operator>>(std::istream &in, Matrix &mat)
     while ((pos = s.find(delimiter)) != string::npos)
     {
         token = s.substr(0, pos);
-        if (rowLen == SIZE_MAX)
+        if (rowLen == SIZE_MAX) // init the line at the first time..
         {
             rowLen = token.length();
         }
@@ -361,6 +359,17 @@ istream &zich::operator>>(std::istream &in, Matrix &mat)
         std::cout << token << endl;
         s.erase(0, pos + delimiter.length());
     }
+    //** final iterate:
+    token = s.substr(0, pos);
+    if (token.length() != rowLen)
+    {
+        throw invalid_argument("the rows must be the same length\n");
+    }
+    ans += token;
+    std::cout << token << endl;
+
+    //** endl
+
     if (s.length() != rowLen) // check if the final part is valid
     {
         throw invalid_argument("the rows must be the same length\n");
