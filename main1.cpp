@@ -3,7 +3,7 @@
 /*
  @AUTHOR: dvir borochov
  how to run:
-  clang++-9 main.cpp -o main
+  clang++-9 main1.cpp -o main
    */
 
 int main()

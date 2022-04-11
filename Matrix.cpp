@@ -142,10 +142,7 @@ Matrix Matrix::operator++(int num) const // post (x++)
 
 bool Matrix::operator!=(const Matrix &other) const
 {
-    // int sum1 = std::accumulate(this->_vec.begin(), this->_vec.end(), 0);
-    // int sum2 = std::accumulate(other._vec.begin(), other._vec.end(), 0);
 
-    // return (sum1 != sum2 ? true : false);
     return !(*this == other);
 }
 
@@ -153,12 +150,12 @@ bool Matrix::operator==(const Matrix &other) const
 {
     if (this->_row != other._row || this->_column != other._column)
     {
-        return false;
+        throw invalid_argument("are not the same.. ");
     }
 
-    for (size_t i = 0; i < this->_row; ++i)
+    for (unsigned int i = 0; i < this->_row; ++i)
     {
-        for (size_t j = 0; j < this->_column; j++)
+        for (unsigned int j = 0; j < this->_column; j++)
         {
             if (this->_vec.at(i) != other._vec.at(i))
             {
@@ -253,9 +250,10 @@ Matrix Matrix::operator*(const Matrix &other)
     {
         throw "column num of left matrix not eqals to right rows num";
     }
-    unsigned int size = (unsigned int)(this->_row * other._column);
-    vector<double> tVec(size, 0);
-    Matrix temp{tVec, this->_column, other._row};
+
+    std::vector<double> tVec;
+    tVec.resize((unsigned int)(this->_row * other._column));
+    Matrix temp(tVec, this->_row, other._column);
     for (int i = 0; i < temp._row; i++)
     {
         for (int j = 0; j < temp._column; j++)
