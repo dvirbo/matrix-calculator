@@ -52,20 +52,6 @@ Matrix Matrix::operator-(const Matrix &other)
 
     return temp;
 }
-// here we change the orginal mat
-// Matrix Matrix::operator-=(const Matrix &other)
-// {
-//     if (this->_row != other._row || this->_column != other._column)
-//     {
-//         throw "can't make Arithmetic Operators between Different matrices";
-//     }
-//     for (unsigned i = 0; i < this->_vec.size(); i++)
-//     {
-//         this->_vec.at(i) = this->_vec.at(i) - other._vec.at(i);
-//     }
-
-//     return *this;
-// }
 
 Matrix Matrix::operator+() const
 {
@@ -106,6 +92,7 @@ Matrix Matrix::operator-=(const Matrix &other)
 // ---------------------------------------------------------------
 // inc and dec operators
 // ---------------------------------------------------------------
+
 Matrix Matrix::operator++() const // pre (++x)
 {
     Matrix temp{this->_vec, this->_row, this->_column};
@@ -247,31 +234,39 @@ zich::Matrix zich::operator*(double d, Matrix &mat)
     return temp;
 }
 
+double Matrix::mult_helper(const Matrix &other, const int row, const int col)
+{
+    double ans = 0;
+    for (int i = 0; i < this->_column; i++)
+    {
+        unsigned int left_mat = (unsigned int)(this->_column * row + i);
+        unsigned int right_mat = (unsigned int)(other._column * i + col);
+        ans += this->_vec.at(left_mat) * other._vec.at(right_mat);
+    }
+    return ans;
+}
+
 // mult 2 mat..return the new mat the mult of them
 Matrix Matrix::operator*(const Matrix &other)
 {
     if (this->_column != other._row)
     {
-        throw "wrong mult";
+        throw "column num of left matrix not eqals to right rows num";
     }
     unsigned int size = (unsigned int)(this->_row * other._column);
     vector<double> tVec(size, 0);
-
     Matrix temp{tVec, this->_column, other._row};
-
-    for (unsigned int i = 0; i < this->_row; i++)
-    {
-        for (unsigned int j = 0; j < other._column; j++)
+        for (int i = 0; i < temp._row; i++)
         {
-            for (unsigned int k = 0; k < this->_column; k++)
+            for (int j = 0; j < temp._column; j++)
             {
-                temp._vec.at(i + j) += this->_vec.at(i + k) * other._vec.at(k + j);
+              temp._vec.at((unsigned int)(i * temp._column + j)) = mult_helper(other, i, j);
+
             }
         }
+        return temp;
     }
 
-    return temp;
-}
 
 // mult mat with some num, change and return the orginal mat
 Matrix Matrix::operator*=(double d)
@@ -301,8 +296,8 @@ Matrix Matrix::operator*(double d) const
 
 Matrix &Matrix::operator*=(const Matrix &other)
 {
-        *this = (*this * other);
-        return *this;
+    *this = (*this * other);
+    return *this;
 }
 
 //-----------------------------

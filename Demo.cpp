@@ -46,6 +46,9 @@ int main()
             [0 6 0]
             [0 0 6]*/
 
+
+  cout << (b * a) << endl;
+
   cout << "End of demo!" << endl;
   return 0;
 }

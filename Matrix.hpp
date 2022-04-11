@@ -8,6 +8,7 @@ namespace zich
     {
         int _row;
         int _column;
+        double mult_helper(const Matrix &other, const int row, const int col);
 
     public:
         std::vector<double> _vec;
@@ -57,6 +58,7 @@ namespace zich
         Matrix operator*=(double d);
         Matrix &operator*=(const Matrix &other);              // V
         Matrix operator*(double d) const;
+
 
         //##############################
         // I/O Operators
